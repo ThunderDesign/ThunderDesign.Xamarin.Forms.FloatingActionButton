@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sh="clr-namespace:Sharpnado.Shades;assembly=Sharpnado.Shadows"
+             x:Class="ThunderDesign.Xamarin.Forms.FloatingActionButton.Controls.FloatingActionButton"
+             x:Name="FloatingActionButtonRoot">
+    <sh:Shadows x:Name="ShadowsFAB"
+        CornerRadius="{Binding CornerRadius, Source={x:Reference FloatingActionButtonRoot}}"
+        Scale="0">
+        <Button x:Name="ButtonFAB"
+            Clicked="OnButtonClicked"
+            Pressed="OnButtonPressed"
+            Released="OnButtonReleased"    
+            Command="{Binding Command, Source={x:Reference FloatingActionButtonRoot}}"
+            CommandParameter="{Binding CommandParameter, Source={x:Reference FloatingActionButtonRoot}}"
+            ContentLayout="{Binding ContentLayout, Source={x:Reference FloatingActionButtonRoot}}"
+            Text="{Binding Text, Source={x:Reference FloatingActionButtonRoot}}"
+            TextColor="{Binding TextColor, Source={x:Reference FloatingActionButtonRoot}}"
+            CharacterSpacing="{Binding CharacterSpacing, Source={x:Reference FloatingActionButtonRoot}}"
+            Font="{Binding Font, Source={x:Reference FloatingActionButtonRoot}}"
+            FontFamily="{Binding FontFamily, Source={x:Reference FloatingActionButtonRoot}}"
+            FontSize="{Binding FontSize, Source={x:Reference FloatingActionButtonRoot}}"
+            TextTransform="{Binding TextTransform, Source={x:Reference FloatingActionButtonRoot}}"
+            FontAttributes="{Binding FontAttributes, Source={x:Reference FloatingActionButtonRoot}}"
+            BorderWidth="{Binding BorderWidth, Source={x:Reference FloatingActionButtonRoot}}"
+            BorderColor="{Binding BorderColor, Source={x:Reference FloatingActionButtonRoot}}"
+            CornerRadius="{Binding CornerRadius, Source={x:Reference FloatingActionButtonRoot}}"
+            ImageSource="{Binding ImageSource, Source={x:Reference FloatingActionButtonRoot}}"
+            IsPressed="{Binding IsPressed, Source={x:Reference FloatingActionButtonRoot}}"
+            BackgroundColor="{Binding BackgroundColor, Source={x:Reference FloatingActionButtonRoot}}"
+            WidthRequest="{Binding WidthRequest, Source={x:Reference FloatingActionButtonRoot}}"
+            HeightRequest="{Binding HeightRequest, Source={x:Reference FloatingActionButtonRoot}}"
+            Margin="0"
+            Padding="0"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+    </sh:Shadows>
+</ContentView>
