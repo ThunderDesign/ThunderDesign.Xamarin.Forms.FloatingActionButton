@@ -1,0 +1,57 @@
+name: CD
+
+on:
+  release:
+    types: [published]
+
+env:
+  TITLE: "FloatingActionButton %28FAB%29 for Xamarin.Forms"
+  DESCRIPTION: "FloatingActionButton %28FAB%29 with custom shadow %28Color%2C Offset%2C Blur%29 and custom Animation Easing %28Show%2C Hide%29 for Xamarin.Forms view %28Android%2C iOS%2C UWP%29"
+  TAGS: "thunderdesign visual%2Dstudio c%2Dsharp dotnet%2Dstandard dotnet%2Dframework dotnet%2Dcore cross%2Dplatform pcl%2Dlibrary xamarin%2Dforms xamarin%2Dandroid xamarin%2Dios xamarin%2Duwp csharp net dotnet fab floatingactionbutton floating%2Daction%2Dbutton control shadow button"
+  #FILE_NAME: ex: "ThunderDesign.Net-PCL.Threading"
+  FILE_NAME: "${{ github.event.repository.name }}"
+  #REPOSITORY_NAME: ex: "ThunderDesign.Net-PCL.Threading"
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  #REPOSITORY_OWNER: ex: "ThunderDesign"
+  REPOSITORY_OWNER: ${{ github.repository_owner }}
+  #GITHUB_URL: ex: "https://github.com/ThunderDesign"
+  GITHUB_URL: ${{ github.server_url }}/${{ github.repository_owner }}
+  #REPOSITORY_URL: ex: "https://github.com/ThunderDesign/ThunderDesign.Net-PCL.Threading"
+  REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.repository.name }}
+ 
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+
+jobs:
+  pack:
+
+    runs-on: [windows-latest]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup .NET 2.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.0.x
+        
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: Restore NuGet packages.sln
+      run: nuget restore ./src/${{ env.FILE_NAME}}.sln
+      
+    - name: Create NuGet Package
+      run: msbuild ./src/${{ env.FILE_NAME}}.sln -t:pack /p:VersionPrefix=${{ github.event.release.tag_name }} /p:Configuration=Release /p:Title="${{ env.TITLE }}" /p:Description="${{ env.DESCRIPTION }}" /p:PackageTags="${{ env.TAGS }}" /p:Authors=ThunderDesign /p:PackageProjectUrl=${{ env.GITHUB_URL }} /p:PackageLicenseExpression=MIT /p:RepositoryType=git /p:RepositoryUrl=${{ env.REPOSITORY_URL }} /p:PackageReleaseNotes="See ${{ env.REPOSITORY_URL }}/releases/tag/${{ github.event.release.tag_name }}" /p:PackageOutputPath=${{ env.PACKAGE_OUTPUT_DIRECTORY}}
+      
+    - name: Archive NuGet Package
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: Package_${{ env.FILE_NAME}}.${{ github.event.release.tag_name }}
+        path: ${{ env.PACKAGE_OUTPUT_DIRECTORY}}\${{ env.FILE_NAME}}.${{ github.event.release.tag_name }}.nupkg
+
+    - name: Publish NuGet Package
+      run: nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY}}\${{ env.FILE_NAME}}.${{ github.event.release.tag_name }}.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_API_KEY }}
