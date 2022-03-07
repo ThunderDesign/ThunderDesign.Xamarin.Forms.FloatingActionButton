@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  #FILE_NAME: ex: "ThunderDesign.Net-PCL.Threading"
+  FILE_NAME: "${{ github.event.repository.name }}"
+  
+jobs:
+  build:
+
+    runs-on: [windows-latest]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup .NET 2.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.0.x
+        
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: Restore NuGet packages
+      run: nuget restore ./src/${{ env.FILE_NAME}}.sln
+      
+    - name: Build Solution
+      run: msbuild ./src/${{ env.FILE_NAME}}.sln /p:Configuration=Release
+      
