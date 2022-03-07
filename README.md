@@ -111,7 +111,7 @@ Use the `-version` option to specify an [older version](https://www.nuget.org/pa
 
 *(TIP: Clone repo, open the solution, build it and run sample app.)*
 - Xamarin
-  - [SimpleContacts Example](https://github.com/ThunderDesign/ThunderDesign.Xamarin.Forms.FloatingActionButton/tree/main/samples/Xamarin/SimpleContacts)
+  - [SimpleItems Example](https://github.com/ThunderDesign/ThunderDesign.Xamarin.Forms.FloatingActionButton/tree/main/samples/Xamarin/SimpleItems)
 
 ## Please Contribute!
 
