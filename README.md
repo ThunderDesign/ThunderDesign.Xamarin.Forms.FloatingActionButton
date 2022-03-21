@@ -15,7 +15,7 @@ FloatingActionButton (FAB) with custom shadow (Color, Offset, Blur) and custom A
 | :heavy_check_mark: iOS     |
 | :heavy_check_mark: UWP     |
 
-![Presentation](docs/FAB.png)
+![FAB](https://user-images.githubusercontent.com/98920689/159338743-7c46f39b-50cb-4938-912d-1fe2ac670ad3.png)
 
 ## Getting Started:
 
